@@ -1,5 +1,6 @@
 const canvas = document.getElementById('whiteboard');
 const ctx = canvas.getContext('2d');
+const socket = io();
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -183,5 +184,20 @@ redrawAll();
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    redrawAll();
+});
+
+// 當本地畫線時，送出線條資料給 server
+canvas.addEventListener('mouseup', () => {
+    drawing = false;
+    if (currentLine && currentLine.points.length > 1) {
+        socket.emit('draw_line', currentLine);
+    }
+    currentLine = null;
+});
+
+// 接收其他使用者畫的線條
+socket.on('draw_line', function(line) {
+    lines.push(line);
     redrawAll();
 });
