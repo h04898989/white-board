@@ -70,3 +70,23 @@ document.querySelectorAll('.eraser-btn').forEach(btn => {
 
 // 預設選中第一個顏色
 document.querySelector('.color-btn').classList.add('selected');
+
+let brushSize = 2;
+
+function drawLine(x1, y1, x2, y2) {
+    ctx.strokeStyle = currentColor;
+    ctx.lineWidth = brushSize;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+}
+
+// 畫筆粗細調整
+const brushSizeInput = document.getElementById('brush-size');
+const brushSizeValue = document.getElementById('brush-size-value');
+brushSizeInput.addEventListener('input', function() {
+    brushSize = parseInt(this.value, 10);
+    brushSizeValue.textContent = this.value;
+});
