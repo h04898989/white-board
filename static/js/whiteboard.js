@@ -45,3 +45,28 @@ document.querySelectorAll('.color-btn').forEach(btn => {
 });
 // 預設選中第一個顏色
 document.querySelector('.color-btn').classList.add('selected');
+
+let isEraser = false;
+
+document.querySelectorAll('.color-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        isEraser = false;
+        currentColor = this.getAttribute('data-color');
+        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
+        document.querySelectorAll('.eraser-btn').forEach(b => b.classList.remove('selected'));
+        this.classList.add('selected');
+    });
+});
+
+document.querySelectorAll('.eraser-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        isEraser = true;
+        currentColor = "#fff"; // 與 canvas 背景色一致
+        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
+        document.querySelectorAll('.eraser-btn').forEach(b => b.classList.remove('selected'));
+        this.classList.add('selected');
+    });
+});
+
+// 預設選中第一個顏色
+document.querySelector('.color-btn').classList.add('selected');
